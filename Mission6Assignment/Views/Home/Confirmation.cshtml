@@ -1,0 +1,14 @@
+﻿@model Mission06_Fawson.Models.Movie
+
+@{
+    ViewData["Title"] = "Movie Added";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Success!</h1>
+    <p>The movie <strong>@Model.Title</strong> has been added to the collection.</p>
+
+    <br />
+    <a asp-action="EnterMovie" class="btn btn-primary">Add Another Movie</a>
+    <a asp-action="Index" class="btn btn-secondary">Return Home</a>
+</div>
