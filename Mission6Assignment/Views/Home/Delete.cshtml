@@ -1,0 +1,29 @@
+﻿@* This is just a confirmation page to make sure the user really wants to delete the 
+movie. It displays the title of the movie being deleted and has a warning that the 
+action cannot be undone. If the user confirms, it submits a POST request to the Delete 
+action method in the Home controller, passing the MovieId as a hidden input. If they 
+cancel, it redirects back to the MovieList view. *@
+
+@model Mission06_Fawson.Models.Movie
+
+@{
+    ViewData["Title"] = "Delete Movie";
+}
+
+<div class="text-center mt-5">
+    <h2>Confirm Deletion</h2>
+
+    @* Validation so the user doesn't accidentally delete a movie *@
+    <div class="alert alert-danger mt-4">
+        <h4>Are you sure you want to delete "<strong>@Model.Title</strong>" from the collection?</h4> Validation so the 
+        <p>This action cannot be undone.</p>
+    </div>
+
+    <form asp-action="Delete" method="post">
+        @* Hidden input so the controller knows which movie to delete *@
+        <input type="hidden" asp-for="MovieId" />
+
+        <button type="submit" class="btn btn-danger">Yes, Delete It</button>
+        <a asp-controller="Home" asp-action="MovieList" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

@@ -5,29 +5,33 @@ namespace Mission06_Fawson.Models
     public class Movie
     {
         [Key]
-        [Required]
         public int MovieId { get; set; }
 
-        [Required]
-        public string Category { get; set; }
+        // Foreign Key
+        public int CategoryId { get; set; }
+        public Category? Category { get; set; } // Navigation property
 
-        [Required]
+        [Required(ErrorMessage = "Title is required")]
         public string Title { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Year is required")]
+        [Range(1888, 3000, ErrorMessage = "Year must be 1888 or later")] // Validation is added to prevent false entries
         public int Year { get; set; }
 
-        [Required]
-        public string Director { get; set; }
+        public string? Director { get; set; } // Optional, user doesn't have to enter it
 
-        [Required]
-        public string Rating { get; set; } // We will use a dropdown for this later (G, PG, PG-13, R)
+        public string? Rating { get; set; } // Optional, user doesn't have to enter it
 
-        public bool Edited { get; set; } // "Yes/No" option
+        [Required(ErrorMessage = "Edited field is required")]
+        public bool Edited { get; set; }
 
-        public string? LentTo { get; set; } // Optional
+        public string? LentTo { get; set; }
 
-        [StringLength(25)] // Limited to 25 characters
-        public string? Notes { get; set; } // Optional
+        [StringLength(25)]
+        public string? Notes { get; set; }
+
+        // NEW FIELD ADDED
+        [Required(ErrorMessage = "Copied to Plex is required")]
+        public bool CopiedToPlex { get; set; }
     }
 }

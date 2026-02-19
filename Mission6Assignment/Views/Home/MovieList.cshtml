@@ -1,0 +1,64 @@
+﻿@* The @model directive tells this view what kind of data to expect from the Controller. 
+    Here, we are expecting an IEnumerable (a list or collection) of Movie objects. 
+*@
+@model IEnumerable<Mission06_Fawson.Models.Movie>
+
+@{
+    // Sets the title variable for the browser tab. The _Layout.cshtml file reads this.
+    ViewData["Title"] = "Movie Collection";
+}
+
+<div class="text-center">
+    <h2>The Collection</h2>
+    <p>Here are all the movies currently in the database.</p>
+</div>
+
+<table class="table table-bordered table-striped table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Title</th>
+            <th>Year</th>
+            <th>Category</th>
+            <th>Director</th>
+            <th>Rating</th>
+            <th>Edited</th>
+            <th>Copied To Plex</th>
+            <th>Lent To</th>
+            <th>Notes</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @* The foreach loop iterates through every single movie passed into the Model from the database. *@
+        @foreach (var m in Model)
+        {
+            <tr>
+                <td>@m.Title</td>
+                <td>@m.Year</td>
+
+                @* The '?' is a null-conditional operator. It safely checks the CategoryName. 
+                    If a movie somehow doesn't have a linked Category object, it just leaves it blank instead of crashing the app. 
+                *@
+                <td>@m.Category?.CategoryName</td>
+
+                <td>@m.Director</td>
+                <td>@m.Rating</td>
+
+                @* These are ternary operators. They act as a mini if/else statement: if Edited is true, print "Yes", otherwise print "No". *@
+                <td>@(m.Edited ? "Yes" : "No")</td>
+                <td>@(m.CopiedToPlex ? "Yes" : "No")</td>
+
+                <td>@m.LentTo</td>
+                <td>@m.Notes</td>
+
+                <td>
+                    <a class="btn btn-warning btn-sm" asp-controller="Home" asp-action="Edit" asp-route-id="@m.MovieId">Edit</a>
+                </td>
+                <td>
+                    <a class="btn btn-danger btn-sm" asp-controller="Home" asp-action="Delete" asp-route-id="@m.MovieId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
